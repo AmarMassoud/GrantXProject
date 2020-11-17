@@ -1,0 +1,3 @@
+name: GrantXProject
+version: ${project.version}
+main: me.amar.grantxproject.GrantXProject
