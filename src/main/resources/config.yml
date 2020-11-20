@@ -1,9 +1,13 @@
-bot-token: 0
+bot-token: '0'
 grant:
   channel-id: 0
+  is-enabled: false
 
 expire:
   channel-id: 0
+  is-enabled: false
 
 revoke:
   channel-id: 0
+  is-enabled: false
+

@@ -20,7 +20,7 @@ public class DataYml {
             plugin.getDataFolder().mkdirs();
         }
 
-        dataFile = new File(plugin.getDataFolder(), "data.yml");
+        dataFile = new File(plugin.getDataFolder(), "config.yml");
 
 
         if (!dataFile.exists()) {

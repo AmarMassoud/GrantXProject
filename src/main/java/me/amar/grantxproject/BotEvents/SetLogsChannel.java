@@ -2,6 +2,10 @@ package me.amar.grantxproject.BotEvents;
 
 import me.amar.grantxproject.Files.DataYml;
 import me.amar.grantxproject.GrantXProject;
+import me.amar.grantxproject.MinecraftEvents.GrantEvent;
+import me.amar.grantxproject.MinecraftEvents.GrantExpire;
+import me.amar.grantxproject.MinecraftEvents.GrantRevoke;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -11,16 +15,60 @@ public class SetLogsChannel extends ListenerAdapter {
     private static GrantXProject plugin = GrantXProject.getPlugin(GrantXProject.class);
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
         String[] args = e.getMessage().getContentRaw().split("\\s+");
-        if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("-setLogs")) {
-                if(!e.getMessage().getMentionedChannels().isEmpty()) {
-                    plugin.getConfig().set("logs-channel-id", e.getMessage().getMentionedChannels().get(0).getId());
-                    e.getChannel().sendMessage("Grant logs has been set to <#" + e.getMessage().getMentionedChannels().get(0).getId() + ">").queue();
+
+            if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("xsetlogs")) {
+                    if (e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+                        try {
+                            GrantXProject.getJda().getTextChannelById(args[2].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
+                        } catch (Exception e1) {
+                            System.out.println(e1);
+                            e.getMessage().getChannel().sendMessage("Command usage: xsetlogs `grant|revoke|expire|all` #channel").queue();
+                        }
+                        GrantExpire grantExpire = new GrantExpire();
+                        GrantRevoke revokeEvent = new GrantRevoke();
+                        GrantEvent grantEvent = new GrantEvent();
+                        switch (args[1].toLowerCase()) {
+
+                            case "grant":
+                                plugin.getConfig().set("grant.channel-id", args[2].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
+                                plugin.getConfig().set("grant.is-enabled", true);
+                                grantEvent.setEnabled(true);
+                                e.getMessage().getChannel().sendMessage("Grant logs were set successfully!").queue();
+                                break;
+                            case "revoke":
+                                plugin.getConfig().set("revoke.channel-id", args[2].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
+                                plugin.getConfig().set("revoke.is-enabled", true);
+                                revokeEvent.setEnabled(true);
+                                e.getMessage().getChannel().sendMessage("Revoke logs were set successfully!").queue();
+                                break;
+                            case "expire":
+                                plugin.getConfig().set("expire.channel-id", args[2].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
+                                plugin.getConfig().set("expire.is-enabled", true);
+                                grantExpire.setEnabled(true);
+                                e.getMessage().getChannel().sendMessage("Expire logs were set successfully!").queue();
+                                break;
+                            case "all":
+                                plugin.getConfig().set("grant.channel-id", args[2].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
+                                plugin.getConfig().set("grant.is-enabled", true);
+                                grantEvent.setEnabled(true);
+                                plugin.getConfig().set("revoke.channel-id", args[2].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
+                                plugin.getConfig().set("revoke.is-enabled", true);
+                                revokeEvent.setEnabled(true);
+                                plugin.getConfig().set("expire.channel-id", args[2].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
+                                plugin.getConfig().set("expire.is-enabled", true);
+                                grantExpire.setEnabled(true);
+                                e.getMessage().getChannel().sendMessage("All logs were set successfully!").queue();
+                                break;
+                            default:
+                                e.getMessage().getChannel().sendMessage("Command usage: xsetlogs `grant|revoke|expire|all` #channel").queue();
+                                break;
+                        }
+
+                    }
                 }
             }
-        } else {
 
         }
 
-    }
 }
