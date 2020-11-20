@@ -19,7 +19,7 @@ public class GrantRevoke implements Listener {
         OfflinePlayer target = grant.getTarget();
 
             if (!plugin.getConfig().getString("revoke.channel-id").equalsIgnoreCase("0")) {
-                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("revoke.channel-id")).sendMessage("**" + player.getName() + "** has granted **" + target.getName() + "** the **" + e.getGrant().getRank() + "** rank.").queue();
+                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("revoke.channel-id")).sendMessage("**" + player.getName() + "** has revoked **" + target.getName() + "**'s rank of **" + e.getGrant().getRank() + "**.").queue();
             }
         }
     }

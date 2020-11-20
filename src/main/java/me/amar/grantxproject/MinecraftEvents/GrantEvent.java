@@ -23,6 +23,10 @@ public class GrantEvent implements Listener {
             if (!plugin.getConfig().getString("grant.channel-id").equalsIgnoreCase("0")) {
                 GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage("**" + player.getName() + "** has granted **" + target.getName() + "** the **" + e.getGrant().getRank() + "** rank.").queue();
             }
+            else {
+                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage("not work").queue();
+
+            }
         }
     }
     public void setEnabled(boolean enabled) {

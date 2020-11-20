@@ -35,9 +35,9 @@ public final class GrantXProject extends JavaPlugin {
                 jda.getPresence().setActivity(Activity.watching("Type xhelp For Help!"));
                 System.out.println("[GrantX Bot] The plugin has been enabled successfully.");
                 } catch (LoginException e ) {
-                    Utils.sendError(2, "Failed to enable the bot", "The plugin was unable to enable the bot, this usually happens if you didn't input the token correctly.");
+                    Utils.sendError(1, "Failed to enable the bot", "The plugin was unable to enable the bot, this usually happens if you didn't input the token correctly.");
                 } catch(ErrorResponseException e) {
-                    Utils.sendError(1, "Failed to connnect to the Discord API", "Failed to connect to the Discord API. This usually occurs when no internet connection is found.");
+                    Utils.sendError(2, "Failed to connnect to the Discord API", "Failed to connect to the Discord API. This usually occurs when no internet connection is found.");
 
                 }
             }
@@ -50,7 +50,7 @@ public final class GrantXProject extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        jda.shutdown();
+        jda.shutdownNow();
         getLogger().info("Plugin disabled.");
     }
     public static JDA getJda() {

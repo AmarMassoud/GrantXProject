@@ -18,7 +18,7 @@ public class GrantExpire implements Listener {
             OfflinePlayer target = grant.getTarget();
 
             if (!plugin.getConfig().getString("expire.channel-id").equalsIgnoreCase("0")) {
-                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("expire.channel-id")).sendMessage("**" + player.getName() + "** has granted **" + target.getName() + "** the **" + e.getGrant().getRank() + "** rank.").queue();
+                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("expire.channel-id")).sendMessage("**" + target.getName() + "**'s rank (**" + grant.getRank() + "**) has expired.").queue();
             }
         }
     }
