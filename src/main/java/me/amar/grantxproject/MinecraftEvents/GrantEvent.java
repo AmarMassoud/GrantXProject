@@ -18,7 +18,7 @@ public class GrantEvent implements Listener {
         OfflinePlayer player = e.getGrant().getIssuer();
         OfflinePlayer target = e.getGrant().getTarget();
         if(!DataYml.getDataYml().getString("logs-channel-id").equalsIgnoreCase("0")) {
-            GrantXProject.getJda().getTextChannelById(DataYml.getDataYml().getString("logs-channel-id")).sendMessage("*" + player.getName() + "* has granted *" + target.getName() + "* the *" + e.getGrant().getRank() + "* rank.").queue();
+            GrantXProject.getJda().getTextChannelById(DataYml.getDataYml().getString("logs-channel-id")).sendMessage("**" + player.getName() + "** has granted **" + target.getName() + "** the **" + e.getGrant().getRank() + "** rank.").queue();
         }
     }
 }

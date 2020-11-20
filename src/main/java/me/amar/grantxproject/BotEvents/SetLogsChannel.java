@@ -10,26 +10,15 @@ public class SetLogsChannel extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
         String[] args = e.getMessage().getContentRaw().split("\\s+");
         if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("-setLlogs")) {
-                if(isTextChannelValid(args[1], e.getGuild())) {
-                    DataYml.getDataYml().set("logs-channel-id", Integer.parseInt(args[1]));
+            if (args[0].equalsIgnoreCase("-setLogs")) {
+                if(!e.getMessage().getMentionedChannels().isEmpty()) {
+                    DataYml.getDataYml().set("logs-channel-id", e.getMessage().getMentionedChannels().get(0).getId());
+                    e.getChannel().sendMessage("Grant logs has been set to <#" + e.getMessage().getMentionedChannels().get(0).getId() + ">").queue();
                 }
             }
+        } else {
+            e.getChannel().sendMessage("Invalid arguments.").queue();
         }
+
     }
-
-
-
-    public static boolean isTextChannelValid(String textChannelID, Guild guild) {
-        for (TextChannel textchannels : guild.getTextChannels()) {
-            if (textChannelID == textchannels.getId()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
-
-
 }

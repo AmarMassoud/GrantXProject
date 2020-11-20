@@ -7,6 +7,7 @@ import me.amar.grantxproject.MinecraftEvents.GrantEvent;
 import me.amar.grantxproject.Utils.Utils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.exceptions.ContextException;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.internal.requests.Requester;
@@ -28,6 +29,7 @@ public final class GrantXProject extends JavaPlugin {
                 try {
                 setJda(JDABuilder.createDefault(DataYml.getDataYml().getString("bot-token")).build());
                 jda.addEventListener(new SetLogsChannel());
+                System.out.println("[GrantX Bot] The plugin has been enabled successfully.");
                 } catch (LoginException e ) {
                     Utils.sendError(2, "Failed to enable the bot", "The plugin was unable to enable the bot, this usually happens if you didn't input the token correctly.");
                 } catch(ErrorResponseException e) {
@@ -43,8 +45,6 @@ public final class GrantXProject extends JavaPlugin {
     @Override
     public void onDisable() {
         jda.shutdown();
-        // this did not work while being offline, maybe it will work if the bot actually goes online
-        // the error is NoClassDefFoundException: net/net/dv8tion/jda/api/JDA
         getLogger().info("Plugin disabled.");
     }
     public static JDA getJda() {
