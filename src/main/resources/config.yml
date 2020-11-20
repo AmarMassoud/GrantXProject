@@ -1,0 +1,9 @@
+bot-token: 0
+grant:
+  channel-id: 0
+
+expire:
+  channel-id: 0
+
+revoke:
+  channel-id: 0
