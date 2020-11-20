@@ -1,5 +1,6 @@
 package me.amar.grantxproject;
 
+import me.amar.grantxproject.BotEvents.DisableLogs;
 import me.amar.grantxproject.BotEvents.HelpCommand;
 import me.amar.grantxproject.BotEvents.SetLogsChannel;
 import me.amar.grantxproject.Files.DataYml;
@@ -32,6 +33,7 @@ public final class GrantXProject extends JavaPlugin {
                 setJda(JDABuilder.createDefault(getConfig().getString("bot-token")).build());
                 jda.addEventListener(new SetLogsChannel());
                 jda.addEventListener(new HelpCommand());
+                jda.addEventListener(new DisableLogs());
                 jda.getPresence().setActivity(Activity.watching("Type xhelp For Help!"));
                 System.out.println("[GrantX Bot] The plugin has been enabled successfully.");
                 } catch (LoginException e ) {

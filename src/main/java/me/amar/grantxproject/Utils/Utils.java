@@ -1,5 +1,6 @@
 package me.amar.grantxproject.Utils;
 
+import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.ChatColor;
 
 public class Utils {
@@ -17,5 +18,15 @@ public class Utils {
         System.out.println(prefix + "If you think this is an error please contact the Support team at (link)");
         System.out.println(prefix + "!-----------------------------------------------------!");
         System.out.println(prefix + " ");
+    }
+    public static String getChannelID(Message message) {
+        if(message.getMentionedChannels().isEmpty()) {
+            return null;
+        } else {
+            return message.getMentionedChannels().get(0).getId();
+        }
+
+
+
     }
 }
