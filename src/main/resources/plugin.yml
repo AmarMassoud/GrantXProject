@@ -1,3 +1,6 @@
 name: GrantXProject
 version: ${project.version}
 main: me.amar.grantxproject.GrantXProject
+commands:
+  gtx:
+    description: The main command for the GrantX Bot plugin.
