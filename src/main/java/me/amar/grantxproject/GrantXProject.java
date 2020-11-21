@@ -1,8 +1,6 @@
 package me.amar.grantxproject;
 
-import me.amar.grantxproject.BotEvents.DisableLogs;
-import me.amar.grantxproject.BotEvents.HelpCommand;
-import me.amar.grantxproject.BotEvents.SetLogsChannel;
+import me.amar.grantxproject.BotEvents.Commands;
 import me.amar.grantxproject.Files.DataYml;
 import me.amar.grantxproject.MinecraftEvents.ConfigReload;
 import me.amar.grantxproject.MinecraftEvents.GrantEvent;
@@ -11,7 +9,6 @@ import me.amar.grantxproject.MinecraftEvents.GrantRevoke;
 import me.amar.grantxproject.Utils.Utils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.security.auth.login.LoginException;
 
 public final class GrantXProject extends JavaPlugin {
-
+    static String prefix = "x";
     static JDA jda;
     @Override
     public void onEnable() {
@@ -31,10 +28,8 @@ public final class GrantXProject extends JavaPlugin {
             } else {
                 try {
                 setJda(JDABuilder.createDefault(getConfig().getString("bot-token")).build());
-                jda.addEventListener(new SetLogsChannel());
-                jda.addEventListener(new HelpCommand());
-                jda.addEventListener(new DisableLogs());
-                jda.getPresence().setActivity(Activity.watching("Type xhelp For Help!"));
+                jda.addEventListener(new Commands());
+                jda.getPresence().setActivity(Activity.watching("Type x help For Help!"));
                 System.out.println("[GrantX Bot] The plugin has been enabled successfully.");
                 } catch (LoginException e ) {
                     Utils.sendError(1, "Failed to enable the bot", "The plugin was unable to enable the bot, this usually happens if you didn't input the token correctly.");
@@ -61,6 +56,9 @@ public final class GrantXProject extends JavaPlugin {
 
     public void setJda(JDA jda) {
         this.jda = jda;
+    }
+    public static String getPrefix(){
+        return prefix;
     }
 
     public void loadConfigManager() {

@@ -17,10 +17,10 @@ public class GrantEvent implements Listener {
 
 
 
-    boolean isEnabled = plugin.getConfig().getBoolean("grant.is-enabled");
+
     @EventHandler
     public void GrantEvent(GrantActivateEvent e) {
-        if(isEnabled) {
+        if(plugin.getConfig().getBoolean("grant.is-enabled")) {
             Grant grant = e.getGrant();
             OfflinePlayer player = grant.getIssuer();
             OfflinePlayer target = grant.getTarget();
@@ -37,19 +37,14 @@ public class GrantEvent implements Listener {
 
                 }
                 GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage(embed.build()).queue();
-
-
-                //ok you muted then
-                //
-            }
-           /*
-
-
-            */
+            } else{
+            System.out.println("No channel ID");
+           }
         }
     }
     public void setEnabled(boolean enabled) {
         plugin.getConfig().set("grant.is-enabled", enabled);
-        isEnabled = enabled;
+        plugin.saveConfig();
+        System.out.println(plugin.getConfig().getBoolean("grant.is-enabled"));
     }
 }

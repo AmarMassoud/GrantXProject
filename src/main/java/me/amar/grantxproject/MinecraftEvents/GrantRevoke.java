@@ -13,10 +13,10 @@ import java.awt.*;
 
 public class GrantRevoke implements Listener {
     private static GrantXProject plugin = GrantXProject.getPlugin(GrantXProject.class);
-    boolean isEnabled = plugin.getConfig().getBoolean("revoke.is-enabled");
+
     @EventHandler
     public void onGrantRevoke(GrantRevokeEvent e) {
-        if(isEnabled) {
+        if(plugin.getConfig().getBoolean("revoke.is-enabled")) {
             Grant grant = e.getGrant();
             OfflinePlayer player = grant.getIssuer();
             OfflinePlayer target = grant.getTarget();
@@ -33,11 +33,15 @@ public class GrantRevoke implements Listener {
 
                 }
                 GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage(embed.build()).queue();
+            } else {
+                System.out.println("Unable to do that");
             }
+        } else {
+            System.out.println("Error, investigate.");
         }
     }
     public void setEnabled(boolean enabled) {
         plugin.getConfig().set("revoke.is-enabled", enabled);
-        isEnabled = enabled;
+        plugin.saveConfig();
     }
 }

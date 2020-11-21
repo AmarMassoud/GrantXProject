@@ -12,10 +12,10 @@ import java.awt.*;
 
 public class GrantExpire implements Listener {
     private static GrantXProject plugin = GrantXProject.getPlugin(GrantXProject.class);
-    boolean isEnabled = plugin.getConfig().getBoolean("expire.is-enabled");
+
     @EventHandler
     public void onGrantExpire(GrantExpireEvent e) {
-        if(isEnabled) {
+        if(plugin.getConfig().getBoolean("expire.is-enabled")) {
             Grant grant = e.getGrant();
             OfflinePlayer target = grant.getTarget();
             if (!plugin.getConfig().getString("revoke.channel-id").equalsIgnoreCase("0")) {
@@ -25,11 +25,14 @@ public class GrantExpire implements Listener {
                 embed.addField("**Grant reason**", grant.getReason().replace("&9&l", ""), true);
                 embed.addField("**Rank duration**", grant.getDuration() + "", true);
                 GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage(embed.build()).queue();
+            } else {
+                System.out.println("Unable to do that");
+
             }
         }
     }
     public void setEnabled(boolean enabled) {
         plugin.getConfig().set("expire.is-enabled", enabled);
-        isEnabled = enabled;
+        plugin.saveConfig();
     }
 }
