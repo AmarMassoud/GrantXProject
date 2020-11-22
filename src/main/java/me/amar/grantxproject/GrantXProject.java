@@ -11,18 +11,22 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import net.milkbowl.vault.permission.Permission;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.security.auth.login.LoginException;
 
 public final class GrantXProject extends JavaPlugin {
-    static String prefix = "x";
+    private static Permission perms = null;
+    static String prefix = "grantx";
     static JDA jda;
     @Override
     public void onEnable() {
         getConfig().options().copyDefaults(true);
         saveConfig();
         saveDefaultConfig();
+        setupPermissions();
             if(getConfig().getString("bot-token").equalsIgnoreCase("0")) {
                 Utils.sendError(0, "Token is not set in config.yml", "The bot token has not been set in the data.yml.");
             } else {
@@ -68,5 +72,13 @@ public final class GrantXProject extends JavaPlugin {
         DataYml.getDataYml().addDefault("logs-channel-id", 0);
         DataYml.getDataYml().options().copyDefaults(true);
         DataYml.saveDataYml();
+    }
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+    }
+    public static Permission getPermissions() {
+        return perms;
     }
 }

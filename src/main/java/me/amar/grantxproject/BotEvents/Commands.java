@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.bukkit.Bukkit;
 
 import java.awt.*;
 
@@ -123,6 +124,14 @@ public class Commands extends ListenerAdapter {
                                 else {
                                     e.getMessage().getChannel().sendMessage("Only Administrators can use this command.").queue();
                                 }
+                            break;
+                        case "ranks":
+                            try {
+                                e.getChannel().sendMessage("**" + String.join(", ", GrantXProject.getPermissions().getPlayerGroups(Bukkit.getPlayer(args[2].toLowerCase()))) + "**" + " are their ranks").queue();
+                            } catch (NullPointerException exc) {
+                                e.getChannel().sendMessage("Invalid player.").queue();
+                                }
+
                             break;
                         default:
                             e.getMessage().getChannel().sendMessage("If you want help, type `" + GrantXProject.getPrefix() + " help`!").queue();
