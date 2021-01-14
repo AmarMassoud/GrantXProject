@@ -24,13 +24,13 @@ public class Commands extends ListenerAdapter {
             if (args.length <= 4) {
                 if (args[0].equalsIgnoreCase(GrantXProject.getPrefix())) {
                     switch (args[1].toLowerCase()){
-                        case "setlogs":
+                        case "set":
                             if (e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                                 try {
                                     GrantXProject.getJda().getTextChannelById(args[3].replace("#", "").replace("<", "").replace(">", "").replace("!", ""));
                                 } catch (Exception e1) {
                                     System.out.println(e1);
-                                    e.getMessage().getChannel().sendMessage("Command usage: xsetlogs `grant|revoke|expire|all` #channel").queue();
+                                    e.getMessage().getChannel().sendMessage("Command usage: logx set `grant|revoke|expire|all` #channel").queue();
                                 }
                                 GrantExpire grantExpire = new GrantExpire();
                                 GrantRevoke revokeEvent = new GrantRevoke();
@@ -64,7 +64,7 @@ public class Commands extends ListenerAdapter {
                                         e.getMessage().getChannel().sendMessage("All logs were set successfully!").queue();
                                         break;
                                     default:
-                                        e.getMessage().getChannel().sendMessage("Command usage: xsetlogs `grant|revoke|expire|all` #channel").queue();
+                                        e.getMessage().getChannel().sendMessage("Command usage: logx set `grant|revoke|expire|all` #channel").queue();
                                         break;
                                 }
 
@@ -78,13 +78,13 @@ public class Commands extends ListenerAdapter {
                                 try {
                                     EmbedBuilder embed = new EmbedBuilder();
                                     embed.setColor(Color.green);
-                                    embed.addField("**xSetLogs (Command)**", "=> Administrators can use this command to setup logs in a channel. ", false);
-                                    embed.addField("**Usage:**", "```x SetLogs grant|revoke|expire|all #channel```", false);
+                                    embed.addField("**Set (Command)**", "=> Administrators can use this command to setup logs in a channel. ", false);
+                                    embed.addField("**Usage:**", "```logx Set grant|revoke|expire|all #channel```", false);
                                     embed.addField("-----------------------------------------","", true);
-                                    embed.addField("**DisableLogs (Command)**", "=> Administrators can use this command to disable specefic (or all) logs.", false);
-                                    embed.addField("**Usage:**", "```x DisableLogs grant|revoke|expire|all```", false);
+                                    embed.addField("**Disable (Command)**", "=> Administrators can use this command to disable specefic (or all) logs.", false);
+                                    embed.addField("**Usage:**", "```logx Disable grant|revoke|expire|all```", false);
                                     embed.addField("-----------------------------------------","", true);
-                                    embed.addField("**Need support?**", "Join https://discord.gg/5XDzE2Q and ask <@426327139533717504> or <@245611604626898945> for help. Do __not__ make a ticket for support on this bot or add-on, as Demeng did not make it.", false);
+                                    embed.addField("**Need support?**", "Join https://discord.gg/JNNANeQsAJ and ask <@426327139533717504> or <@245611604626898945> for help. Do __not__ make a ticket for support on this bot or add-on in Demeng's server, as Demeng did not make it.", false);
                                     e.getMessage().getChannel().sendMessage(embed.build()).queue();
                                 } catch (Exception e1) {
                                     System.out.println(e1);

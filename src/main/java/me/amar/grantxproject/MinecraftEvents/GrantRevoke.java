@@ -4,6 +4,7 @@ import dev.demeng.grantx.api.Grant;
 import dev.demeng.grantx.api.event.GrantExpireEvent;
 import dev.demeng.grantx.api.event.GrantRevokeEvent;
 import me.amar.grantxproject.GrantXProject;
+import me.amar.grantxproject.Utils.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
@@ -29,10 +30,10 @@ public class GrantRevoke implements Listener {
                     embed.addField("**Rank duration**","Permanent", true);
 
                 } else {
-                    embed.addField("**Rank duration**", grant.getDuration() + "", true);
+                    embed.addField("**Rank duration**", Utils.humanize(grant.getDuration()), true);
 
                 }
-                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage(embed.build()).queue();
+                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("revoke.channel-id")).sendMessage(embed.build()).queue();
             } else {
                 System.out.println("Unable to do that");
             }

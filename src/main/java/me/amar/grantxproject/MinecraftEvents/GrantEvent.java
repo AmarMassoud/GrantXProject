@@ -33,7 +33,7 @@ public class GrantEvent implements Listener {
                     embed.addField("**Duration**","Permanent", true);
 
                 } else {
-                    embed.addField("**Duration**", grant.getDuration() + "", true);
+                    embed.addField("**Duration**", Utils.humanize(grant.getDuration()), true);
 
                 }
                 GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage(embed.build()).queue();

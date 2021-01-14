@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.security.auth.login.LoginException;
 
 public final class GrantXProject extends JavaPlugin {
-    static String prefix = "x";
+    static String prefix = "logx";
     static JDA jda;
     @Override
     public void onEnable() {
@@ -24,17 +24,27 @@ public final class GrantXProject extends JavaPlugin {
         saveConfig();
         saveDefaultConfig();
             if(getConfig().getString("bot-token").equalsIgnoreCase("0")) {
-                Utils.sendError(0, "Token is not set in config.yml", "The bot token has not been set in the data.yml.");
+                Utils.sendError(0, "Token is not set in config.yml", "The bot token has not been set.");
             } else {
                 try {
                 setJda(JDABuilder.createDefault(getConfig().getString("bot-token")).build());
+                jda.retrieveApplicationInfo().queue(m -> {
+                    if(m.isBotPublic()){
+                        System.out.println("!-----------------------------------------------------!");
+                        System.out.println("[GrantX Bot] WARNING!");
+                        System.out.println("=> The bot is public.");
+                        System.out.println("=> Set the bot to private to prevent others from inviting");
+                        System.out.println("   it and messing with the logging channels and commands.");
+                        System.out.println("!-----------------------------------------------------!");
+                    }
+                });
                 jda.addEventListener(new Commands());
-                jda.getPresence().setActivity(Activity.watching("Type x help For Help!"));
+                jda.getPresence().setActivity(Activity.watching("Type \"logx help\" For Help!"));
                 System.out.println("[GrantX Bot] The plugin has been enabled successfully.");
                 } catch (LoginException e ) {
-                    Utils.sendError(1, "Failed to enable the bot", "The plugin was unable to enable the bot, this usually happens if you didn't input the token correctly.");
+                    Utils.sendError(1, "Failed to enable the bot", "This usually happens if the token is invalid.");
                 } catch(ErrorResponseException e) {
-                    Utils.sendError(2, "Failed to connnect to the Discord API", "Failed to connect to the Discord API. This usually occurs when no internet connection is found.");
+                    Utils.sendError(2, "Failed to connnect to the Discord API", "This usually occurs when there's no internet connection.");
 
                 }
             }

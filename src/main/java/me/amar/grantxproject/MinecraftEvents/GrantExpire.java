@@ -3,6 +3,7 @@ package me.amar.grantxproject.MinecraftEvents;
 import dev.demeng.grantx.api.Grant;
 import dev.demeng.grantx.api.event.GrantExpireEvent;
 import me.amar.grantxproject.GrantXProject;
+import me.amar.grantxproject.Utils.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
@@ -16,15 +17,15 @@ public class GrantExpire implements Listener {
     @EventHandler
     public void onGrantExpire(GrantExpireEvent e) {
         if(plugin.getConfig().getBoolean("expire.is-enabled")) {
-            Grant grant = e.getGrant();
+            final Grant grant = e.getGrant();
             OfflinePlayer target = grant.getTarget();
-            if (!plugin.getConfig().getString("revoke.channel-id").equalsIgnoreCase("0")) {
+            if (!plugin.getConfig().getString("expire.channel-id").equalsIgnoreCase("0")) {
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(0xda600a);
                 embed.addField("**Expire**", "**" + target.getName() + "**'s rank expired.", false);
                 embed.addField("**Grant reason**", grant.getReason().replace("&9&l", ""), true);
-                embed.addField("**Rank duration**", grant.getDuration() + "", true);
-                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("grant.channel-id")).sendMessage(embed.build()).queue();
+                embed.addField("**Rank duration**", Utils.humanize(grant.getDuration()), true);
+                GrantXProject.getJda().getTextChannelById(plugin.getConfig().getString("expire.channel-id")).sendMessage(embed.build()).queue();
             } else {
                 System.out.println("Unable to do that");
 
